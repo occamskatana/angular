@@ -1,7 +1,18 @@
 angular.module('flapperNews', [])
+
+	.factory('posts', [function(){
+		var o = {
+			posts: []
+		};
+		return o
+	}])
+	
+
 	.controller('MainCtrl', [
 		'$scope',
-		function($scope){
+		'posts',
+		function($scope,posts){
+			$scope.posts = posts.posts;
 			$scope.posts = [
 		{title: 'post 1', upvotes: 5,},
 		{title: 'post 2', upvotes: 2,},
@@ -12,8 +23,14 @@ angular.module('flapperNews', [])
 
 		$scope.addPost = function(){
 			if(!$scope.title || $scope.title === '') {return;}
-			$scope.posts.push({title: $scope.title, upvotes: 0});
+			$scope.posts.push({
+
+				title: $scope.title, 
+				link: $scope.link,
+				upvotes: 0
+			});
 			$scope.title = '';
+			$scope.link = '';
 		};
 
 		$scope.incrementUpvotes = function(post) {
